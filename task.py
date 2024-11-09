@@ -115,12 +115,10 @@ def latest_time(time_str):
     return f"{hours}:{minutes}"
 
 
-# Example usage:
 time_str = "23:??"
-# print(latest_time(time_str))  # Output: 23:59
-
+# print(latest_time(time_str))  
 time_str = "?6:??"
-# print(latest_time(time_str))  # Output: 16:59
+# print(latest_time(time_str)) 
 
 
 
@@ -128,22 +126,120 @@ time_str = "?6:??"
 
 
 def compress(word: str) -> str:
+    if not word:
+        return ""
+
     compressed_string = ""
     count = 1
+
     for i in range(1, len(word)):
-        print(i)
         if word[i] == word[i - 1]:
             count += 1
         else:
-            compressed_string += word[i - 1] + str(count)      
+            if count > 1:
+                compressed_string += str(count) + word[i - 1]
             count = 1
-   
-    compressed_string += word[-1] + str(count)
+
+
+    compressed_string += str(count) + word[-1]
     return compressed_string
 
 
 compres = "abbcccdddd"
-print(compress(compres))
+# print(compress(compres))
 compres = "ddffffee"
-print(compress(compres))
+# print(compress(compres))
+
+
+
+
+
+def get_longest_word( s: str) -> str:
+    splitted = s.split(" ")
+    longest_word = ""
+    for i in splitted:
+        if len(i) > len(longest_word):
+            longest_word = i
+
+    return longest_word
+
+
+longest = get_longest_word('Python is simple and effective!')
+# print(longest)
+
+
+
+
+def is_palindrome(s: str) -> bool:
+    left, right = 0, len(s) - 1
+    
+    while left < right:
+        while left < right and not s[left].isalnum():
+            left += 1
+        while left < right and not s[right].isalnum():
+            right -= 1
+        
+        if left < right and s[left].lower() != s[right].lower():
+            return False
+        
+        left += 1
+        right -= 1
+    
+    return True
+
+# print(is_palindrome('racecar'))  
+# print(is_palindrome('nottona'))  
+# print(is_palindrome("A man, a plan, a canal: Panama"))  
+
+
+
+
+
+
+def swap_quotes(string):
+
+    new_string = ""
+    for char in string:
+        if char == "'":
+            new_string += '"'
+        elif char == '"':
+            new_string += "'"
+        else:
+            new_string += char
+    return new_string
+
+
+input_string = "This is a 'string' with \"double\" quotes."
+output_string = swap_quotes(input_string)
+print(output_string)  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
