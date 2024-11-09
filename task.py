@@ -7,6 +7,143 @@ def next_not_3(x: int, y: int) -> int:
         a += 1
         return a
 
-print(next_not_3(9, 2))
+# print(next_not_3(9, 2))
+
+
+
+def correct_jumbled_text(text, words):
+    """Corrects jumbled words in a text given a list of correct words.
+
+    Args:
+        text: A string containing jumbled words.
+        words: A list of correct words in any order.
+
+    Returns:
+        A string with corrected words.
+    """
+
+    words_set = set(words)  # Create a set for faster lookup
+    words_dict = {}  # Create a dictionary to store words with first and last letters
+
+    for word in words:
+        words_dict[word[0] + word[-1]] = word
+    corrected_text = []
+    for word in text.split():
+        if word[0] + word[-1] in words_dict:
+            corrected_text.append(words_dict[word[0] + word[-1]])
+        else:
+            corrected_text.append(word)  # If word not found, keep original
+
+    return " ".join(corrected_text)
+
+
+# hi =correct_jumbled_text("Somoene watns to colelct corcert wodrs", ["correct", "someone", "words", "to", "collect", "wants"])
+# print(hi)
+
+
+def correct_jumbled_text_alphabets(text, words):
+    """Corrects jumbled words in a text given a list of correct words.
+
+    Args:
+        text: A string containing jumbled words.
+        words: A list of correct words in any order.
+
+    Returns:
+        A string with corrected words.
+    """
+
+    words_set = set(words)
+    corrected_text = []
+
+    for word in text.split():
+        for i in range(len(word)):
+            for j in range(i + 1, len(word) + 1):
+                candidate_word = word[:i] + word[j:]
+                if candidate_word in words_set:
+                    corrected_text.append(candidate_word)
+                    break
+            else:
+                corrected_text.append(word)  # If no match, keep original
+
+    return " ".join(corrected_text)
+
+# hi =correct_jumbled_text("Somoene watns to colelct wrogn wodrs", ["wrong", "someone", "words", "to", "collect", "wants"])
+# print(hi)
+
+
+
+def latest_time(time_str):
+    """
+    Finds the latest possible time from a given 24-hour format time string with '?' characters.
+
+    Args:
+        time_str: A string representing a 24-hour format time with '?' characters.
+
+    Returns:
+        A string representing the latest possible time.
+    """
+
+    hours, minutes = time_str.split(":")
+
+    def replace_question_marks(time_part):
+        if time_part[0] == "?":
+            if time_part == "??":
+                return "23"
+
+            elif int(time_part[1]) <= 3:
+                return f"2{time_part[1]}"
+
+            elif 3 < int(time_part[1]):
+                return f"1{time_part[1]}"
+
+        else:
+            return time_part
+
+    hours = replace_question_marks(hours)
+
+    def replace(minute_part):
+        if minute_part[0] == "?":
+            if minute_part == "??":
+                return "59"
+            else:
+                return f"5{minute_part[1]}"
+        
+        else:
+            return minute_part
+    minutes = replace(minutes)
     
+    return f"{hours}:{minutes}"
+
+
+# Example usage:
+time_str = "23:??"
+# print(latest_time(time_str))  # Output: 23:59
+
+time_str = "?6:??"
+# print(latest_time(time_str))  # Output: 16:59
+
+
+
+
+
+
+def compress(word: str) -> str:
+    compressed_string = ""
+    count = 1
+    for i in range(1, len(word)):
+        print(i)
+        if word[i] == word[i - 1]:
+            count += 1
+        else:
+            compressed_string += word[i - 1] + str(count)      
+            count = 1
+   
+    compressed_string += word[-1] + str(count)
+    return compressed_string
+
+
+compres = "abbcccdddd"
+print(compress(compres))
+compres = "ddffffee"
+print(compress(compres))
 
